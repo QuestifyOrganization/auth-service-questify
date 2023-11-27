@@ -1,16 +1,29 @@
 version: '3'
 
 services: 
-  questify-example-service:
+  questify-auth-service:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: questify-example-service
+    container_name: questify-auth-service
     ports: 
       - "${PORT}:${PORT}"
     volumes:
       - node_modules:/usr/app/node_modules
       - ./app:/usr/app
+    env_file:
+      - .env
+    depends_on:
+      - questify-auth-service-mongodb
+    restart: always
+    networks:
+      - questify-network
+
+  questify-auth-service-mongodb:
+    image: mongo:latest 
+    container_name: questify-auth-service-mongodb
+    ports:
+      - "${MONGO_DB_PORT_HOST}:${MONGO_PORT}" 
     env_file:
       - .env
     restart: always
