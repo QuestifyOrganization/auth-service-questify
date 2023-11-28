@@ -1,7 +1,10 @@
 const express = require('express');
 const { createMainRouter } = require('./routes/mainRouter');
+const cors = require('cors');
 const app = express();
+
 app.use(express.json()); 
+app.use(cors());
 
 const port = process.env.PORT || 3001;
 const host = process.env.HOST || '0.0.0.0';

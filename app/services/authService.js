@@ -1,7 +1,7 @@
 const UserModel = require('../models/userModel')
 const jwt = require('jsonwebtoken');
 const AuthError = require('../exceptions/authError');
-const config = require('../config/jwtConfig');
+const jwtConfig = require('../config/jwtConfig');
 
 class AuthService {
 
@@ -16,15 +16,19 @@ class AuthService {
                 throw new AuthError('Invalid credentials');
             }
 
-            const { id } = user;
+            const { id, name } = user;
 
-            const token = jwt.sign({ id }, config.auth.secret, {
-                expiresIn: config.auth.expiresIn,
+            const token = jwt.sign({ id, name, username }, jwtConfig.auth.secret, {
+                expiresIn: jwtConfig.auth.expiresIn,
             });
+
+            const decodedToken = jwt.verify(token, jwtConfig.auth.secret);
+            console.log
 
             return {
                 user: {
                     id,
+                    name,
                     username,
                 },
                 token,
