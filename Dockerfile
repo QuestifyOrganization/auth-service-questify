@@ -6,5 +6,7 @@ COPY ./app ./
 
 RUN npm cache clean --force && npm install --force-rm
 
+EXPOSE 3004 
+
 CMD ["npm", "run", "start:dev"]
 
