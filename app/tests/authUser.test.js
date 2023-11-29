@@ -1,4 +1,4 @@
-const request = require('./appSupertest');
+const app = require('./appSupertest');
 
 describe('Authentication Test', () => {
   it('should authenticate a newly created user', async () => {
@@ -9,9 +9,9 @@ describe('Authentication Test', () => {
         password: Math.random().toString(36).substring(7)
       };
   
-    await request.post('/api/user/create').send(randomUserData);
+    await app.post('/api/user/create').send(randomUserData);
   
-    const response = await request.post('/api/auth/sign-in').send({
+    const response = await app.post('/api/auth/sign-in').send({
       username: randomUserData.username,
       password: randomUserData.password
     });
